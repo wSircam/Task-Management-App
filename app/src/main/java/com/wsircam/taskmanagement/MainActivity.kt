@@ -1,17 +1,34 @@
 package com.wsircam.taskmanagement
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.wsircam.taskmanagement.ui.drawer.MainDrawer
 import com.wsircam.taskmanagement.ui.theme.TaskManagementTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,11 +36,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TaskManagementTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    MainDrawer()
                 }
             }
         }
@@ -31,17 +47,76 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
+fun MainContainer(scope: CoroutineScope, drawerState: DrawerState) {
+    Scaffold(
+        topBar = {
+            MainTopBar {
+                scope.launch { drawerState.open() }
+            }
+        },
+        modifier = Modifier.systemBarsPadding(),
+
+        ) { innerPadding ->
+        Greeting(
+            modifier = Modifier.padding(innerPadding)
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainTopBar(onMenuClick: () -> Unit) {
+    TopAppBar(
+        title = { },
+        navigationIcon = {
+            IconButton(
+                onClick = {
+                    onMenuClick.invoke()
+                }
+            ) {
+                Icon(
+                    Icons.Default.Menu,
+                    contentDescription = stringResource(R.string.drawer_accessibility)
+                )
+            }
+        }
     )
 }
 
-@Preview(showBackground = true)
+@Composable
+fun Greeting(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .padding(horizontal = 16.dp, vertical = 0.dp)
+    ) {
+        Text(
+            text = stringResource(R.string.home_title),
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+)
+@Composable
+fun GreetingDarkPreview() {
+    TaskManagementTheme(
+        dynamicColor = false,
+    ) {
+        MainDrawer()
+    }
+}
+
+@Preview(
+    showBackground = true,
+)
 @Composable
 fun GreetingPreview() {
-    TaskManagementTheme {
-        Greeting("Android")
+    TaskManagementTheme(
+        dynamicColor = false,
+    ) {
+        MainDrawer()
     }
 }
