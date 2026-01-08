@@ -14,20 +14,39 @@ private val DarkColorScheme = darkColorScheme(
     background = eerieBlack,
     surface = eerieBlack,
     surfaceContainerHighest = eerieBlack,
+
+    primary = Blue80,
+    primaryContainer = Blue20,
+    onPrimaryContainer = Blue80,
+
+    secondaryContainer = Blue40,
+    onSecondaryContainer = Blue90,
+
+    onBackground = LightWhite,
+    onSurface = LightWhite,
 )
 
 private val LightColorScheme = lightColorScheme(
-
     background = antiFlashWhite,
     surface = antiFlashWhite,
     surfaceContainerHighest = antiFlashWhite,
+
+    primary = Blue30,
+    primaryContainer = Blue80,
+    onPrimaryContainer = Blue10,
+
+    secondaryContainer = Blue90,
+    onSecondaryContainer = Blue10,
+
+    onBackground = DarkGrey,
+    onSurface = DarkGrey,
 )
 
 @Composable
 fun TaskManagementTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
