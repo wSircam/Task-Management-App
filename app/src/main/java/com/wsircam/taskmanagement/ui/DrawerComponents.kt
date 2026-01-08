@@ -1,4 +1,4 @@
-package com.wsircam.taskmanagement.ui.drawer
+package com.wsircam.taskmanagement.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth

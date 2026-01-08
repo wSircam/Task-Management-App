@@ -25,7 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wsircam.taskmanagement.ui.drawer.MainDrawer
+import com.wsircam.taskmanagement.models.DayModel
+import com.wsircam.taskmanagement.ui.CalendarCarousel
+import com.wsircam.taskmanagement.ui.MainDrawer
 import com.wsircam.taskmanagement.ui.theme.TaskManagementTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -55,8 +57,7 @@ fun MainContainer(scope: CoroutineScope, drawerState: DrawerState) {
             }
         },
         modifier = Modifier.systemBarsPadding(),
-
-        ) { innerPadding ->
+    ) { innerPadding ->
         Greeting(
             modifier = Modifier.padding(innerPadding)
         )
@@ -91,7 +92,18 @@ fun Greeting(modifier: Modifier = Modifier) {
     ) {
         Text(
             text = stringResource(R.string.home_title),
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.titleLarge,
+        )
+        CalendarCarousel(
+            listOf(
+                DayModel(dayName = "Sun", dayNumber = 12),
+                DayModel(dayName = "Mon", dayNumber = 13),
+                DayModel(dayName = "Wed", dayNumber = 14),
+                DayModel(dayName = "Wed", dayNumber = 15),
+                DayModel(dayName = "Thu", dayNumber = 16),
+                DayModel(dayName = "Fri", dayNumber = 17),
+                DayModel(dayName = "Sat", dayNumber = 18),
+            )
         )
     }
 }
