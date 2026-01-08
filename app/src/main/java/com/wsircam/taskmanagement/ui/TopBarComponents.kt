@@ -23,7 +23,7 @@ fun MainTopBar(onMenuClick: () -> Unit) {
             ) {
                 Icon(
                     Icons.Default.Menu,
-                    contentDescription = stringResource(R.string.drawer_accessibility)
+                    contentDescription = stringResource(R.string.drawer_menu)
                 )
             }
         }
